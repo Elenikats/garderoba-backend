@@ -4,23 +4,13 @@ import weatherApiRouter from "./weatherApiRouter.js";
 
 const clothesRouter = express.Router();
 
-// function clothProcessor(presentWeather) {
-//   // check temperature, rain, humidity and snowing parameters of weather api response
-//   //
-// }
-
-// search endpoint
-
-// const url =
-//   `http://localhost:9000/closet?sort=${selectOptn.value}&sortOrder=asc&page=${page}&perPage=3`
-
-
-
-// `http://localhost:9000/closet?style=${casual,work}&color=${colorOption}&
 
   clothesRouter.get("/closet", async (req, res, next) => {
-  // this is supposed to find all the clothes of a user.
-  try {
+    // example endpoint to connect to this from the front end looks like this
+    // http://localhost:9000/cloth/closet?color[]=%231C86EE
+    
+
+    try {
     
     let query = Cloth.find(req.query)
     // query.populate("type", )
@@ -55,7 +45,9 @@ clothesRouter.get("/favorite", async (req, res, next) => {
   }
 });
 clothesRouter.get("/home", async (req, res, next) => {
-  // this is supposed to find all the clothes of a user.
+  // this is supposed to find all the top-clothes and bottom-clothes as per the weather.
+  // TBC note: weather details to be added in payload. 
+
   try {
     const clothesTopBox = await Cloth.find({ type: "top" }); //we are sending all clothes from this
     const clothesBottomBox = await Cloth.find({ type: "bottom" }); //we are sending all clothes from this
@@ -74,7 +66,7 @@ clothesRouter.get("/home", async (req, res, next) => {
 });
 
 clothesRouter.put("/:id", async (req, res, next) => {
-
+// the put request to change the cloth from favorite to !favorite
   console.log("req here:", req.body);
   try {
     const id = req.params.id;
@@ -91,24 +83,8 @@ clothesRouter.put("/:id", async (req, res, next) => {
   } catch (error) {
     next({ status: 400, message: error.message});
   }
-
-  //  remove add favorite, edit the season. for all kinds of update
 });
 
-// galleryRouter.get("/?favorite=true", async(req,res,next)=>{
-//     try {
 
-//         res.send([])
-
-//     } catch (error) {
-//         next({
-//             status: 401,
-//             message: error.message,
-//             originalError: error
-//         })
-//     }
-// })
-
-//
 
 export default clothesRouter;
