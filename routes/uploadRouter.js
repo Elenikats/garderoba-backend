@@ -36,18 +36,18 @@ uploadRouter.post("/", async (req, res, next) => {
   }
 });
 
-uploadRouter.get("/", async (req, res, next) => {
-  try {
-    const cloth = await Cloth.findById("62ac68d5f321765b93ec8c02");
+// uploadRouter.get("/", async (req, res, next) => {
+//   try {
+//     const cloth = await Cloth.findById("62ac68d5f321765b93ec8c02");
 
-    res.send(cloth);
-  } catch (error) {
-    next({
-      status: 401,
-      message: error.message,
-      originalError: error,
-    });
-  }
-});
+//     res.send(cloth);
+//   } catch (error) {
+//     next({
+//       status: 401,
+//       message: error.message,
+//       originalError: error,
+//     });
+//   }
+// });
 
 export default uploadRouter;

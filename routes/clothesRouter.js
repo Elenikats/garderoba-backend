@@ -10,11 +10,28 @@ const clothesRouter = express.Router();
 // }
 
 // search endpoint
-clothesRouter.get("/closet", async (req, res, next) => {
+
+// const url =
+//   `http://localhost:9000/closet?sort=${selectOptn.value}&sortOrder=asc&page=${page}&perPage=3`
+
+
+
+// `http://localhost:9000/closet?style=${casual,work}&color=${colorOption}&
+
+  clothesRouter.get("/closet", async (req, res, next) => {
   // this is supposed to find all the clothes of a user.
   try {
-    const clothes = await Cloth.find(); //we are sending all clothes from this
-    res.send(clothes);
+    
+    let query = Cloth.find(req.query)
+    // query.populate("type", )
+
+    if(req.query.color ){
+       query =  Cloth.find({color: req.query.color})
+
+    }
+    const cloths = await query.exec()
+    res.send(cloths)
+
   } catch (error) {
     next({
       status: 401,
@@ -27,7 +44,7 @@ clothesRouter.get("/closet", async (req, res, next) => {
 clothesRouter.get("/favorite", async (req, res, next) => {
   // this is supposed to find all the favorite clothes of a user.
   try {
-    const clothes = await Cloth.find(); //we are sending all clothes from this
+    const clothes = await Cloth.find({ type: "favorite" }); //we are sending all clothes from this
     res.send(clothes);
   } catch (error) {
     next({

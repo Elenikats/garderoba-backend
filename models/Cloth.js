@@ -15,7 +15,7 @@ const clothSchema = new mongoose.Schema({
     type:       { type: String, enum: ["top", "bottom", "full"] },
     color:      { type: String },
     category:   { type: String, enum: ["summer", "winter", "fall", "rainy", "spring" ] },
-    style:      {type: String, enum: ["casual", "formal", "work", "holiday" ] }
+    style:      {type: String, enum: ["casual", "formal", "work", "holiday", "sports" ] }
 }, {timestamps})
 
 const Cloth = model("cloth", clothSchema)
