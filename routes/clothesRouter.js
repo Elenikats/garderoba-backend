@@ -14,14 +14,26 @@ const clothesRouter = express.Router();
     
     let query = Cloth.find(req.query)
     // query.populate("type", )
+    console.log("req query ____", req.query);
+  
+  
+  
+    // if(req.query.color ){
+    //   console.log("color query is-----", color);
+    //    query =  Cloth.find({color: req.query.color})
 
-    if(req.query.color ){
-       query =  Cloth.find({color: req.query.color})
+    // }
 
-    }
-    const cloths = await query.exec()
+    // if(req.query.style){
+    //   console.log("style----", req.query);
+    //   query = Cloth.find({style: req.query.style})
+    // }
+    // // const cloths = await query.exec()
+    const cloths = await Cloth.find({ color: req.query.color, style: req.query.style })
+    console.log(cloths.map((cloth)=>cloth.style))
+    console.log("clothes -----", cloths);
     res.send(cloths)
-
+   
   } catch (error) {
     next({
       status: 401,

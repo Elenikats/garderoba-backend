@@ -14,7 +14,7 @@ const clothSchema = new mongoose.Schema({
     favorite:   { type: Boolean, default: false, },
     type:       { type: String, enum: ["top", "bottom", "full"] },
     color:      { type: String },
-    category:   { type: String, enum: ["summer", "winter", "fall", "rainy", "spring" ] },
+    season:     { type: String, enum: ["summer", "winter", "fall", "rainy", "spring" ] },
     style:      {type: String, enum: ["casual", "formal", "work", "holiday", "sports" ] }
 }, {timestamps})
 
