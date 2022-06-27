@@ -5,35 +5,18 @@ import weatherApiRouter from "./weatherApiRouter.js";
 const clothesRouter = express.Router();
 
 
-  clothesRouter.get("/closet", async (req, res, next) => {
-    // example endpoint to connect to this from the front end looks like this
-    // http://localhost:9000/cloth/closet?color[]=%231C86EE
-    
+// search endpoint
+clothesRouter.get("/closet", async (req, res, next) => {
+  // this is supposed to find all the clothes of a user.
+  try {
+    if (Object.keys(req.query).length === 0) {
+      const clothes = await Cloth.find(); //we are sending all clothes from this
 
-    try {
-    
-    let query = Cloth.find(req.query)
-    // query.populate("type", )
-    console.log("req query ____", req.query);
-  
-  
-  
-    // if(req.query.color ){
-    //   console.log("color query is-----", color);
-    //    query =  Cloth.find({color: req.query.color})
-
-    // }
-
-    // if(req.query.style){
-    //   console.log("style----", req.query);
-    //   query = Cloth.find({style: req.query.style})
-    // }
-    // // const cloths = await query.exec()
-    const cloths = await Cloth.find({ color: req.query.color, style: req.query.style })
-    console.log(cloths.map((cloth)=>cloth.style))
-    console.log("clothes -----", cloths);
-    res.send(cloths)
-   
+      res.send(clothes);
+    } else {
+      const clothes = await Cloth.find(req.query);
+      res.send(clothes);
+    }
   } catch (error) {
     next({
       status: 401,
@@ -63,8 +46,8 @@ clothesRouter.get("/home", async (req, res, next) => {
   try {
     const clothesTopBox = await Cloth.find({ type: "top" }); //we are sending all clothes from this
     const clothesBottomBox = await Cloth.find({ type: "bottom" }); //we are sending all clothes from this
-    const favorites = await Cloth.find({favorite:true})
-    
+    const favorites = await Cloth.find({ favorite: true });
+
     clothesTopBox.reverse();
     clothesBottomBox.reverse();
     res.send({ clothesTopBox, clothesBottomBox, favorites });
@@ -78,22 +61,20 @@ clothesRouter.get("/home", async (req, res, next) => {
 });
 
 clothesRouter.put("/:id", async (req, res, next) => {
-// the put request to change the cloth from favorite to !favorite
   console.log("req here:", req.body);
   try {
     const id = req.params.id;
     console.log("id", id);
     const cloth = await Cloth.findById(id);
-    cloth.favorite = req.body.favorite
+    cloth.favorite = req.body.favorite;
     cloth.save();
-    
+
     res.send(cloth);
     if (!cloth) {
-      return next({ status: 404, message: "not found"});
+      return next({ status: 404, message: "not found" });
     }
-  
   } catch (error) {
-    next({ status: 400, message: error.message});
+    next({ status: 400, message: error.message });
   }
 });
 
