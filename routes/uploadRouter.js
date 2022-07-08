@@ -16,7 +16,7 @@ uploadRouter.post("/", async (req, res, next) => {
     if(!user){
       return next(createError(404, "User not found"))
     }
-    const cloth = await Cloth.create({...req.body, category: req.body.season, type: req.body.type});
+    const cloth = await Cloth.create({...req.body, season: req.body.season, type: req.body.type});
     
     user.clothes.push(cloth)
     await user.save()
