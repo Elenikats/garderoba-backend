@@ -2,7 +2,7 @@ import { body } from "express-validator";
 
 const userValidators = [
   body("username")
-    .isWhitelisted("abcdefghijklmnopqrstuvxyz1234567890-_")
+    .isWhitelisted("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.")
     .withMessage("username-invalid"),
   body("email")
       .isEmail()

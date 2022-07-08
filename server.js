@@ -9,6 +9,7 @@ import dotenv from "dotenv"
 import bodyParser from "body-parser"
 import userRouter from "./routes/userRouter.js";
 import checkToken from "./middlewares/checkToken.js";
+import googleSigninRouter from "./routes/googleSigninRouter.js";
 
 const app = express();
 
@@ -32,6 +33,8 @@ app.use("/cloth", checkToken, clothesRouter)
 app.use("/upload", checkToken, uploadRouter)
 app.use("/weatherApiKey", weatherApiRouter)
 app.use("/users", userRouter)
+app.use("/googleSignin", googleSigninRouter)
+
 // global error handler middleware
 app.use(globalErrorHandler);
 // listening

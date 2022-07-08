@@ -6,23 +6,21 @@ import createError from "http-errors";
 const uploadRouter = express.Router();
 // POST: Add an Item/Cloth from FE
 uploadRouter.post("/", async (req, res, next) => {
-
   try {
-
-    // console.log("req payload during upload", req.body);
-    // console.log("current user is---",req.body.user);
-
-    const user = await User.findById(req.body.user)
-    if(!user){
-      return next(createError(404, "User not found"))
+    const user = await User.findById(req.body.user);
+    if (!user) {
+      return next(createError(404, "User not found"));
     }
-    const cloth = await Cloth.create({...req.body, season: req.body.season, type: req.body.type});
-    
-    user.clothes.push(cloth)
-    await user.save()
+
+    const cloth = await Cloth.create({
+      ...req.body,
+      season: req.body.season,
+      type: req.body.type,
+    });
+
+    user.clothes.push(cloth);
+    await user.save();
     res.send(cloth);
-
-
   } catch (error) {
     next({
       status: 400,
